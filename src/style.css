@@ -294,8 +294,3 @@ code {
     border-right-color: var(--border);
   }
 }
-canvas
-{
-  width: 800px;
-  height: 800px;
-}
