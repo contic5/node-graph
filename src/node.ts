@@ -5,8 +5,8 @@ export class Node
 
     x=0;
     y=0;
-    radius=10;
-    move_speed=5;
+    radius=5;
+    move_speed=2;
     angle:number;
     v_x:number;
     v_y:number;

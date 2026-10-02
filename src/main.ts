@@ -1,6 +1,6 @@
 import './style.css'
 import { Node } from './node';
-
+import { calculate_distance,generate_2d_array } from './shared';
 function clear()
 {
   ctx.fillStyle="#000000";
@@ -9,12 +9,14 @@ function clear()
 function draw_connections()
 {
   ctx.strokeStyle="azure";
-  ctx.lineWidth=3;
+  ctx.lineWidth=2;
   for(let from=0;from<nodes.length;from++)
   {
     for(let to=from+1;to<nodes.length;to++)
     {
-      if(connections[from][to]==true)
+      const distance=calculate_distance(nodes[from],nodes[to]);
+
+      if(distance<connection_distance)
       {
         ctx.beginPath();
         ctx.moveTo(nodes[from].x,nodes[from].y);
@@ -43,53 +45,27 @@ function draw()
 
   draw_connections();
 }
-function generate_2d_array(width:number,height:number,value:any=false)
-{
-  let res:any[][]=[];
-  for(let i=0;i<height;i++)
-  {
-    res.push([]);
-    for(let j=0;j<width;j++)
-    {
-      res[i].push(value);
-    }
-  }
-  return res;
-}
 function setup()
 {
-  connections=generate_2d_array(total_nodes,total_nodes);
   nodes=[];
   for(let i=0;i<total_nodes;i++)
   {
     nodes.push(new Node(c));
   }
+}
+export function update_values()
+{
+  let total_nodes_element=document.getElementById("total_nodes") as HTMLInputElement;
+  total_nodes=parseInt(total_nodes_element.value);
 
-  const total_connections=(connection_rate*((total_nodes-1)*(total_nodes-1)))/(2*100);
-  let connections_made=0;
-
-  let total_attempts=0;
-  let max_attempts=Math.min(10000,total_nodes*total_nodes*total_nodes);
-
-  while(connections_made<total_connections&&total_attempts<max_attempts)
-  {
-    let from=Math.floor(Math.random()*total_nodes);
-    let to=Math.floor(Math.random()*total_nodes);
-    if(from!=to&&!connections[from][to])
-    {
-      connections[from][to]=true;
-      connections[to][from]=true;
-      connections_made+=1;
-    }
-    total_attempts+=1;
-  }
-  console.log(connections_made);
+  let connection_distance_element=document.getElementById("connection_distance") as HTMLInputElement;
+  connection_distance=parseInt(connection_distance_element.value);
+  setup();
 }
 
 let total_nodes=50;
-let connections:boolean[][]=[];
+let connection_distance=150;
 let nodes:Node[]=[];
-let connection_rate=25;
 
 let c=document.getElementById("my_canvas") as HTMLCanvasElement;
 let ctx=c.getContext("2d") as CanvasRenderingContext2D;

@@ -8,8 +8,20 @@
   </head>
   <body>
   <main>
+  <h1>Node Graph</h1>
+  <label for="total_nodes">Total Nodes</label>
+  <input type="range" id="total_nodes" min="2" max="100" value="50">
+  <label for="connection_distance">Connection Distance</label>
+  <input type="range" id="connection_distance" min="10" max="250">
+
   <canvas id="my_canvas" width="500" height="500"></canvas>
   </main>
   <script type="module" src="/src/main.ts"></script>
+  <script type="module">
+  import {update_values} from "/src/main.ts";
+  document.getElementById("total_nodes").onchange=update_values;
+  document.getElementById("connection_distance").onchange=update_values;
+
+  </script>
   </body>
 </html>
