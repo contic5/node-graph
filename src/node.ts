@@ -11,9 +11,11 @@ export class Node
     v_x:number;
     v_y:number;
 
-    constructor(c:HTMLCanvasElement)
+    constructor(c:HTMLCanvasElement,move_speed:number)
     {
        this.angle=Math.random()*2*Math.PI;
+       this.move_speed=move_speed;
+       
        this.x=Math.floor(Math.random()*(c.width-this.radius));
        this.y=Math.floor(Math.random()*(c.width-this.radius));
        this.v_x=this.move_speed*Math.cos(this.angle);

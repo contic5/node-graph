@@ -3,10 +3,11 @@ main
   margin:auto;
   max-width:600px;
   padding: 10px;
-  background-color:white;
+  background-color:rgb(185, 228, 236);
   min-height: 100vh;
 }
 body
 {
   background-color:gray;
 }
+.box:last-child { margin-bottom: 1.5rem; }

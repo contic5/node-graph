@@ -4,23 +4,61 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+>
     <title>node-graph</title>
   </head>
   <body>
   <main>
-  <h1>Node Graph</h1>
+  <h1 class="title is-1">Node Graph</h1>
+  <div class="fixed-grid has-2-cols">
+  <div class="grid">
+  <div class="cell box">
   <label for="total_nodes">Total Nodes</label>
-  <input type="range" id="total_nodes" min="2" max="100" value="50">
+  </div>
+  <div class="cell box">
+  <input type="number" class="total_nodes" min="2" max="100" value="50">
+  <input type="range" class="total_nodes" min="2" max="100" value="50">
+  </div>
+
+  <div class="cell box">
   <label for="connection_distance">Connection Distance</label>
-  <input type="range" id="connection_distance" min="10" max="250">
+  </div>
+  <div class="cell box">
+  <input type="number" class="connection_distance" min="10" max="250" value="130">
+  <input type="range" class="connection_distance" min="10" max="250" value="130">
+  </div>
+
+  <div class="cell box">
+  <label for="node_speed">Node Speed</label>
+  </div>
+
+  <div class="cell box">
+  <input type="number" class="node_speed" min="0" max="10" value="5">
+  <input type="range" class="node_speed" min="0" max="10" value="5">
+  </div>
+
+  </div>
+  </div>
 
   <canvas id="my_canvas" width="500" height="500"></canvas>
   </main>
   <script type="module" src="/src/main.ts"></script>
   <script type="module">
   import {update_values} from "/src/main.ts";
-  document.getElementById("total_nodes").onchange=update_values;
-  document.getElementById("connection_distance").onchange=update_values;
+
+  let input_classes=["node_speed","total_nodes","connection_distance"];
+  
+  for(let input_class of input_classes)
+  {
+    let class_elements=document.getElementsByClassName(input_class);
+    for(let class_element of class_elements)
+    {
+      class_element.onchange=(e)=>update_values(e);
+    }
+  }
 
   </script>
   </body>

@@ -50,21 +50,26 @@ function setup()
   nodes=[];
   for(let i=0;i<total_nodes;i++)
   {
-    nodes.push(new Node(c));
+    nodes.push(new Node(c,node_speed));
   }
 }
-export function update_values()
+export function update_values(e:Event)
 {
-  let total_nodes_element=document.getElementById("total_nodes") as HTMLInputElement;
+
+  let total_nodes_element=document.getElementsByClassName("total_nodes")[0] as HTMLInputElement;
   total_nodes=parseInt(total_nodes_element.value);
 
-  let connection_distance_element=document.getElementById("connection_distance") as HTMLInputElement;
+  let connection_distance_element=document.getElementsByClassName("connection_distance")[0] as HTMLInputElement;
   connection_distance=parseInt(connection_distance_element.value);
+
+  let node_speed_element=document.getElementsByClassName("connection_distance")[0] as HTMLInputElement;
+  node_speed=parseInt(node_speed_element.value)/5;
   setup();
 }
 
 let total_nodes=50;
 let connection_distance=150;
+let node_speed=2;
 let nodes:Node[]=[];
 
 let c=document.getElementById("my_canvas") as HTMLCanvasElement;
