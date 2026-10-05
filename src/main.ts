@@ -8,7 +8,7 @@ function clear()
 }
 function draw_connections()
 {
-  ctx.strokeStyle="azure";
+  ctx.strokeStyle=Node.line_color;
   ctx.lineWidth=2;
   for(let from=0;from<nodes.length;from++)
   {
@@ -38,38 +38,64 @@ function draw()
     node.move(c);
   }
   
+  draw_connections();
+
   for(let node of nodes)
   {
     node.draw(ctx);
   }
 
-  draw_connections();
 }
 function setup()
 {
   nodes=[];
   for(let i=0;i<total_nodes;i++)
   {
-    nodes.push(new Node(c,node_speed));
+    nodes.push(new Node(c));
   }
 }
 export function update_values(e:Event)
 {
-
+  if(e.target instanceof HTMLInputElement)
+  {
+    const target_class=e.target.className;
+    let class_elements=document.getElementsByClassName(target_class);
+    for(let class_element of class_elements)
+    {
+      if(class_element instanceof HTMLInputElement)
+      {
+        class_element.value=e.target.value;
+      }
+    }
+  }
   let total_nodes_element=document.getElementsByClassName("total_nodes")[0] as HTMLInputElement;
   total_nodes=parseInt(total_nodes_element.value);
 
   let connection_distance_element=document.getElementsByClassName("connection_distance")[0] as HTMLInputElement;
   connection_distance=parseInt(connection_distance_element.value);
 
-  let node_speed_element=document.getElementsByClassName("connection_distance")[0] as HTMLInputElement;
+  let node_speed_element=document.getElementsByClassName("node_speed")[0] as HTMLInputElement;
   node_speed=parseInt(node_speed_element.value)/5;
+  console.log(`Total Nodes: ${total_nodes} | Connection Distance: ${connection_distance} | Node Speed: ${node_speed}`);
+  Node.move_speed=node_speed;
+
+  let node_color_element=document.getElementById("node_color") as HTMLInputElement;
+  Node.node_color=node_color_element.value;
+
+
+  let line_color_element=document.getElementById("line_color") as HTMLInputElement;
+  Node.line_color=line_color_element.value;
+
   setup();
 }
 
 let total_nodes=50;
 let connection_distance=150;
 let node_speed=2;
+
+Node.move_speed=node_speed;
+Node.node_color="lightblue";
+Node.line_color="white";
 let nodes:Node[]=[];
 
 let c=document.getElementById("my_canvas") as HTMLCanvasElement;

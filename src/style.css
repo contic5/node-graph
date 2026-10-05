@@ -8,6 +8,6 @@ main
 }
 body
 {
-  background-color:gray;
+  background-color:rgb(35, 43, 44);
 }
 .box:last-child { margin-bottom: 1.5rem; }

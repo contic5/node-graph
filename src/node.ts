@@ -2,24 +2,25 @@ export class Node
 {
     static c:HTMLCanvasElement;
     static ctx:CanvasRenderingContext2D;
+    static move_speed:number
+    static node_color:string;
+    static line_color:string;
 
     x=0;
     y=0;
     radius=5;
-    move_speed=2;
     angle:number;
     v_x:number;
     v_y:number;
 
-    constructor(c:HTMLCanvasElement,move_speed:number)
+    constructor(c:HTMLCanvasElement)
     {
        this.angle=Math.random()*2*Math.PI;
-       this.move_speed=move_speed;
-       
+
        this.x=Math.floor(Math.random()*(c.width-this.radius));
        this.y=Math.floor(Math.random()*(c.width-this.radius));
-       this.v_x=this.move_speed*Math.cos(this.angle);
-       this.v_y=this.move_speed*Math.sin(this.angle);
+       this.v_x=Node.move_speed*Math.cos(this.angle);
+       this.v_y=Node.move_speed*Math.sin(this.angle);
     }
     move(c:HTMLCanvasElement)
     {
@@ -49,7 +50,7 @@ export class Node
     }
     draw(ctx:CanvasRenderingContext2D)
     {
-        ctx.fillStyle="lightblue";
+        ctx.fillStyle=Node.node_color;
         ctx.beginPath();
         ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
         ctx.fill();

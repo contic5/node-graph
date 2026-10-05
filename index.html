@@ -40,6 +40,22 @@
   <input type="range" class="node_speed" min="0" max="10" value="5">
   </div>
 
+  <div class="cell box">
+  <label for="node_color">Node Color</label>
+  </div>
+
+  <div class="cell box">
+  <input type="color" id="node_color" class="node_color" value="lightblue">
+  </div>
+
+  <div class="cell box">
+  <label for="line_color">Line Color</label>
+  </div>
+
+  <div class="cell box">
+  <input type="color" id="line_color" class="line_color" value="white">
+  </div>
+
   </div>
   </div>
 
@@ -49,7 +65,7 @@
   <script type="module">
   import {update_values} from "/src/main.ts";
 
-  let input_classes=["node_speed","total_nodes","connection_distance"];
+  let input_classes=["node_speed","total_nodes","connection_distance","node_color","line_color"];
   
   for(let input_class of input_classes)
   {
