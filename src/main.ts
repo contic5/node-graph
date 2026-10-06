@@ -6,6 +6,33 @@ function clear()
   ctx.fillStyle="#000000";
   ctx.fillRect(0,0,c.width,c.height);
 }
+function calculate_connections()
+{
+  for(let from=0;from<nodes.length;from++)
+  {
+    for(let to=from+1;to<nodes.length;to++)
+    {
+      const distance=calculate_distance(nodes[from],nodes[to]);
+      if(distance<connection_distance)
+      {
+        connection_frames[from][to]=Math.min(connection_frames[from][to]+1,required_connection_frames);
+      }
+      else
+      {
+        connection_frames[from][to]=Math.max(connection_frames[from][to]-1,0);
+      }
+
+      if(!connected[from][to]&&connection_frames[from][to]==required_connection_frames)
+      {
+        connected[from][to]=true;
+      }
+      else if(connected[from][to]&&connection_frames[from][to]==0)
+      {
+        connected[from][to]=false;
+      }
+    }
+  }
+}
 function draw_connections()
 {
   ctx.strokeStyle=Node.line_color;
@@ -14,9 +41,7 @@ function draw_connections()
   {
     for(let to=from+1;to<nodes.length;to++)
     {
-      const distance=calculate_distance(nodes[from],nodes[to]);
-
-      if(distance<connection_distance)
+      if(connected[from][to]==true)
       {
         ctx.beginPath();
         ctx.moveTo(nodes[from].x,nodes[from].y);
@@ -38,13 +63,18 @@ function draw()
     node.move(c);
   }
   
-  draw_connections();
+  calculate_connections();
+  frames_drawn+=1;
 
-  for(let node of nodes)
+  if(frames_drawn>=required_connection_frames)
   {
-    node.draw(ctx);
-  }
+    draw_connections();
 
+    for(let node of nodes)
+    {
+      node.draw(ctx);
+    }
+  }
 }
 function setup()
 {
@@ -53,6 +83,9 @@ function setup()
   {
     nodes.push(new Node(c));
   }
+  connection_frames=generate_2d_array(total_nodes,total_nodes,0);
+  connected=generate_2d_array(total_nodes,total_nodes,0);
+  frames_drawn=0;
 }
 export function update_values(e:Event)
 {
@@ -86,10 +119,11 @@ export function update_values(e:Event)
   let line_color_element=document.getElementById("line_color") as HTMLInputElement;
   Node.line_color=line_color_element.value;
 
+
   setup();
 }
 
-let total_nodes=50;
+let total_nodes=125;
 let connection_distance=150;
 let node_speed=2;
 
@@ -100,7 +134,12 @@ let nodes:Node[]=[];
 
 let c=document.getElementById("my_canvas") as HTMLCanvasElement;
 c.width=window.innerWidth;
-c.height=window.innerHeight;
+c.height=window.innerHeight-30;
+
+let connection_frames=generate_2d_array(total_nodes,total_nodes,0);
+let connected=generate_2d_array(total_nodes,total_nodes,0);
+let required_connection_frames=10;
+let frames_drawn=0;
 
 let ctx=c.getContext("2d") as CanvasRenderingContext2D;
 

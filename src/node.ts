@@ -18,7 +18,7 @@ export class Node
        this.angle=Math.random()*2*Math.PI;
 
        this.x=Math.floor(Math.random()*(c.width-this.radius));
-       this.y=Math.floor(Math.random()*(c.width-this.radius));
+       this.y=Math.floor(Math.random()*(c.height-this.radius));
        this.v_x=Node.move_speed*Math.cos(this.angle);
        this.v_y=Node.move_speed*Math.sin(this.angle);
     }

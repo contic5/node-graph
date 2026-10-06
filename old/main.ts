@@ -86,7 +86,7 @@ function setup()
   console.log(connections_made);
 }
 
-let total_nodes=50;
+let total_nodes=100;
 let connections:boolean[][]=[];
 let nodes:Node[]=[];
 let connection_rate=5;
