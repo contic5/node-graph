@@ -99,6 +99,9 @@ Node.line_color="white";
 let nodes:Node[]=[];
 
 let c=document.getElementById("my_canvas") as HTMLCanvasElement;
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+
 let ctx=c.getContext("2d") as CanvasRenderingContext2D;
 
 setup();
